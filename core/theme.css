@@ -1,0 +1,106 @@
+:root {
+  --bg: #0f1115;
+  --s1: #171a21;
+  --line: #272b35;
+  --tx: #e9ebee;
+  --mu: #8a909b;
+  --ac: #c6f24e;
+  --on: #0f1115;
+  --r: 14px;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; background: var(--bg); color: var(--tx);
+  font: 17px/1.35 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  -webkit-text-size-adjust: 100%; touch-action: manipulation;
+}
+body { min-height: 100dvh; overscroll-behavior-y: none; }
+#app { max-width: 520px; margin: 0 auto; padding: calc(env(safe-area-inset-top) + 8px) 16px 0; }
+main { padding-bottom: calc(env(safe-area-inset-bottom) + 32px); }
+main.tabs { padding-bottom: calc(env(safe-area-inset-bottom) + 96px); }
+h1 { font-size: 30px; font-weight: 700; margin: 16px 0 28px; letter-spacing: -0.01em; }
+h2 { font-size: 19px; font-weight: 600; margin: 0; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; margin: 0; cursor: pointer; -webkit-user-select: none; user-select: none; }
+a { color: inherit; }
+.mu { color: var(--mu); }
+.small { font-size: 14px; }
+
+.btn {
+  display: flex; align-items: center; justify-content: center; width: 100%;
+  min-height: 56px; padding: 8px 20px; border: 1px solid var(--line); border-radius: var(--r);
+  font-weight: 600; text-decoration: none; text-align: center; color: var(--tx);
+}
+.btn.primary { background: var(--ac); border-color: var(--ac); color: var(--on); }
+.btn.big { min-height: 76px; font-size: 20px; }
+.link {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 4px;
+  color: var(--mu); text-decoration: none; font-size: 15px;
+}
+
+.top { display: flex; align-items: center; justify-content: space-between; min-height: 48px; }
+
+.rows { display: flex; flex-direction: column; margin-bottom: 40px; }
+.row {
+  display: flex; align-items: center; width: 100%; min-height: 64px;
+  border-bottom: 1px solid var(--line); text-decoration: none; text-align: left; position: relative;
+}
+.row.strong { font-size: 22px; font-weight: 600; }
+.rows.quiet .row { color: var(--mu); }
+
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; display: flex; z-index: 5;
+  background: var(--bg); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tabbar a {
+  flex: 1; min-height: 58px; display: flex; align-items: center; justify-content: center;
+  color: var(--mu); text-decoration: none; font-size: 15px; font-weight: 600;
+}
+.tabbar a.on { color: var(--ac); }
+
+#toast {
+  position: fixed; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom) + 84px);
+  max-width: 488px; margin: 0 auto; z-index: 10;
+  display: none; align-items: center; justify-content: space-between;
+  min-height: 56px; padding: 4px 8px 4px 16px;
+  background: var(--s1); border: 1px solid var(--line); border-radius: var(--r);
+}
+#toast.on { display: flex; }
+#toast button { color: var(--ac); font-weight: 600; min-height: 48px; padding: 0 12px; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  min-width: 48px; min-height: 48px; padding: 0 14px;
+  border: 1px solid var(--line); border-radius: 24px; color: var(--mu); font-weight: 600;
+}
+.chip.on { border-color: var(--ac); color: var(--ac); }
+
+.stepper { display: flex; align-items: center; gap: 8px; }
+.stepper .lab { width: 34px; color: var(--mu); font-size: 14px; }
+.stepper button {
+  width: 68px; height: 54px; border: 1px solid var(--line); border-radius: var(--r);
+  font-size: 26px; line-height: 1;
+}
+.stepper input {
+  flex: 1; min-width: 0; height: 54px; text-align: center; font-size: 28px; font-weight: 700;
+  background: none; border: 0; outline: 0; border-radius: var(--r); padding: 0;
+}
+.stepper input:focus { background: var(--s1); }
+
+.field {
+  width: 100%; min-height: 52px; padding: 12px 14px; outline: 0;
+  background: var(--s1); border: 1px solid var(--line); border-radius: var(--r);
+  -webkit-appearance: none; appearance: none;
+}
+.field:focus { border-color: var(--mu); }
+textarea.field { resize: none; min-height: 96px; display: block; }
+.file { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.chart svg { width: 100%; height: auto; display: block; }
+.chart .ln { fill: none; stroke: var(--ac); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .dot { fill: var(--ac); }
+.chart .dim { fill: var(--mu); }
+.chart .ax { stroke: var(--line); stroke-width: 1; }
+.chart text { fill: var(--mu); font-size: 11px; }
