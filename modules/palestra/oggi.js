@@ -1,6 +1,11 @@
 import * as D from './data.js';
 import { h, audio } from '../../core/ui.js';
 
+const pick = (label, items, cur, onpick) => h('div', { class: 'pick' },
+  h('span', { class: 'cap', text: label }),
+  h('div', { class: 'seg' }, items.map((v) =>
+    h('button', { class: v === cur ? 'on' : '', text: v, 'aria-label': `${label} ${v}`, onclick: () => onpick(v) }))));
+
 export default function oggi(root, ctx) {
   const b = D.block();
   if (!b) {
@@ -20,18 +25,10 @@ export default function oggi(root, ctx) {
     const week = cur ? cur.week : st.week;
     root.replaceChildren(h('div', { class: 'oggi' },
       h('h1', { text: 'Palestra' }),
+      h('p', { class: 'mu small', text: b.nome }),
       h('div', { class: 'grow' }),
-      !cur && h('div', { class: 'tags' },
-        h('button', { class: 'chip', text: 'Scheda ' + sheet, onclick: () => {
-          st.next = ids[(ids.indexOf(sheet) + 1) % ids.length];
-          D.saveState();
-          draw();
-        } }),
-        h('button', { class: 'chip', text: 'Settimana ' + week, onclick: () => {
-          st.week = (week % 4) + 1;
-          D.saveState();
-          draw();
-        } })),
+      !cur && pick('Scheda', ids, sheet, (v) => { st.next = v; D.saveState(); draw(); }),
+      !cur && pick('Settimana', [1, 2, 3, 4], week, (v) => { st.week = v; D.saveState(); draw(); }),
       h('button', {
         class: 'btn primary big',
         text: `${cur ? 'Continua' : 'Inizia'} Scheda ${sheet} · settimana ${week}`,

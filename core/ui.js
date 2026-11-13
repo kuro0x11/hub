@@ -56,17 +56,17 @@ export function stepper({ label, value, step, dec, onchange }) {
     onkeydown: (e) => { if (e.key === 'Enter') inp.blur(); },
   });
   return h('div', { class: 'stepper' },
-    h('span', { class: 'lab', text: label }),
+    h('span', { class: 'lab cap', text: label }),
     h('button', { text: '−', 'aria-label': label + ' meno', onclick: () => set((value || 0) - step) }),
     inp,
     h('button', { text: '+', 'aria-label': label + ' più', onclick: () => set((value || 0) + step) }));
 }
 
 // ---- gruppo di chip a scelta singola ----
-export function chips(items, current, onpick) {
-  const box = h('div', { class: 'chips' });
+export function chips(items, current, onpick, seg) {
+  const box = h('div', { class: seg ? 'seg' : 'chips' });
   const draw = () => box.replaceChildren(...items.map((it) =>
-    h('button', { class: 'chip' + (it.value === current ? ' on' : ''), text: it.label,
+    h('button', { class: (seg ? '' : 'chip') + (it.value === current ? ' on' : ''), text: it.label,
       onclick: () => { current = it.value; draw(); onpick(current); } })));
   draw();
   return box;

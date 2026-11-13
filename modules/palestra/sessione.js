@@ -40,6 +40,7 @@ export default function sessione(root, ctx) {
   let open = live ? nextUndone() : null;
 
   const list = h('div', { class: 'exs' });
+  const progFill = h('i', {});
   const bar = h('div', { class: 'bottombar' });
 
   // ---- serie ----
@@ -87,7 +88,7 @@ export default function sessione(root, ctx) {
     const fail = h('button', { class: 'chip fail' + (x.fail ? ' on' : ''), text: 'Cedimento',
       onclick: () => { x.fail = !x.fail; save(); fail.classList.toggle('on', x.fail); } });
     return h('div', { class: 'set open' + (x.done ? ' done' : '') },
-      h('div', { class: 'sl mu small', text: 'Serie ' + (i + 1) }),
+      h('div', { class: 'sl cap', text: 'Serie ' + (i + 1) }),
       stepper({ label: 'kg', value: x.kg, step: 2.5, dec: true, onchange: (v) => {
         x.kg = v;
         x.m = 1;
@@ -98,7 +99,7 @@ export default function sessione(root, ctx) {
         save();
       } }),
       stepper({ label: 'rip', value: x.reps, step: 1, onchange: (v) => { x.reps = v == null ? null : Math.round(v); save(); } }),
-      h('div', { class: 'rpe' }, h('span', { class: 'lab', text: 'RPE' }), rpeBox),
+      h('div', { class: 'rpe' }, h('span', { class: 'lab cap', text: 'RPE' }), rpeBox),
       h('div', { class: 'act' },
         fail,
         h('button', { class: 'btn big tickbig' + (x.done ? '' : ' primary'), 'aria-label': x.done ? 'Fatta' : 'Segna fatta',
@@ -121,6 +122,8 @@ export default function sessione(root, ctx) {
   function drawList(follow) {
     const y = scrollY;
     list.replaceChildren(...s.entries.map(card));
+    const all = s.entries.flatMap((en) => en.sets);
+    progFill.style.width = (all.length ? (all.filter((x) => x.done).length / all.length) * 100 : 0) + '%';
     scrollTo(0, y);
     if (follow) {
       const el = list.querySelector('.set.open');
@@ -187,6 +190,7 @@ export default function sessione(root, ctx) {
       h('div', { class: 'ttl' },
         h('strong', { text: `Scheda ${s.sheet} · settimana ${s.week}` }),
         h('span', { class: 'mu small', text: fmtDate(s.start, { weekday: 'short', day: 'numeric', month: 'short' }) }))),
+    h('div', { class: 'prog' }, progFill),
     list, extra,
     h('button', { class: 'link', text: 'Elimina sessione', onclick: () => { remove('Sessione eliminata'); ctx.back('palestra/oggi'); } }),
     bar);

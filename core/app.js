@@ -39,7 +39,7 @@ function hub() {
   app.replaceChildren(h('main', {},
     h('h1', { text: 'Hub' }),
     h('nav', { class: 'rows' },
-      modules.map((m) => h('a', { class: 'row strong', href: '#/' + m.id, text: m.nome }))),
+      modules.map((m) => h('a', { class: 'row strong', href: '#/' + m.id }, m.nome, h('span', { class: 'mu', text: '›' })))),
     h('nav', { class: 'rows quiet' },
       h('button', { class: 'row', text: 'Esporta backup', onclick: () => backup.exportBackup(names) }),
       fileRow('Importa backup', '.json,application/json', (f) => backup.importBackup(f, names, reinit))),
